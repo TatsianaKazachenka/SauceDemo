@@ -6,43 +6,50 @@ import org.testng.annotations.Test;
 import pages.Constants.LoginPageConstants;
 import tests.Constants.ProductsTestConstants;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class ProductsTest extends BaseTest {
+    public static final String ADD_PRODUCT_CLASS = "btn_primary";
+    public static final String REMOVE_PRODUCT_CLASS = "btn_secondary";
+    public static final String PRODUCT_TYPE_SORT = "az";
+
     @Test
     public void addProductToCartTest() {
-        addProductToCart();
+        login();
+        productsPage.clickProductItem(ProductsTestConstants.PRODUCT_NAME, ADD_PRODUCT_CLASS);
 
         String price_on_product = productsPage.getProductPrice(ProductsTestConstants.PRODUCT_NAME);
         cartPage.openPage();
 
         String price_on_cart = cartPage.isCheckedProduct(ProductsTestConstants.PRODUCT_NAME) ?
                 cartPage.getCartItemPrice(ProductsTestConstants.PRODUCT_NAME) : ProductsTestConstants.PRODUCT_NOT_FOUND;
-        Assert.assertEquals(price_on_cart, price_on_product);
-
         String price_on_quantity = cartPage.isCheckedProduct(ProductsTestConstants.PRODUCT_NAME) ?
                 cartPage.getCartItemQuantity(ProductsTestConstants.PRODUCT_NAME) : ProductsTestConstants.PRODUCT_NOT_FOUND;
+
+        Assert.assertEquals(price_on_cart, price_on_product);
         Assert.assertEquals(price_on_quantity, "1");
     }
 
     @Test
     public void removeProductFromCartTest() {
-        addProductToCart();
+        login();
+        productsPage.clickProductItem(ProductsTestConstants.PRODUCT_NAME, ADD_PRODUCT_CLASS);
 
         cartPage.openPage();
         boolean isCheckedProduct = cartPage.isCheckedProduct(ProductsTestConstants.PRODUCT_NAME);
         if (isCheckedProduct) {
             driver.navigate().back();
-            productsPage.clickProductItem(ProductsTestConstants.PRODUCT_NAME, ProductsTestConstants.REMOVE_PRODUCT_CLASS);
+            productsPage.clickProductItem(ProductsTestConstants.PRODUCT_NAME, REMOVE_PRODUCT_CLASS);
+            cartPage.openPage();
         }
-        cartPage.openPage();
         Assert.assertTrue(isCheckedProduct);
     }
 
     @Test
     public void checkedAddProductToCartBadgeTest() {
-        addProductToCart();
+        login();
+        productsPage.clickProductItem(ProductsTestConstants.PRODUCT_NAME, ADD_PRODUCT_CLASS);
+
         String count = productsPage.getProductCountToBadge();
         Assert.assertEquals(count, "1");
     }
@@ -52,9 +59,9 @@ public class ProductsTest extends BaseTest {
         login();
         int count = initElements().size();
         for (int i = 0; i < count; i++) {
-            List<WebElement> elements = productsPage.getElements();
+            List<WebElement> elements = productsPage.getProductElements();
             String nameProduct = elements.get(i).getText();
-            productsPage.clickProductItem(nameProduct, ProductsTestConstants.ADD_PRODUCT_CLASS);
+            productsPage.clickProductItem(nameProduct, ADD_PRODUCT_CLASS);
             cartPage.openPage();
             String nameProductCart = cartPage.getCartItemName();
             Assert.assertEquals(nameProduct, nameProductCart);
@@ -65,8 +72,8 @@ public class ProductsTest extends BaseTest {
     @Test
     public void sortAtoZProductsTest() {
         login();
-        productsPage.clickSortProducts(ProductsTestConstants.PRODUCT_TYPE_SORT);
-        List<WebElement> elements = productsPage.getElements();
+        productsPage.clickSortProducts(PRODUCT_TYPE_SORT);
+        List<WebElement> elements = productsPage.getProductElements();
         ArrayList<String> elementsText = new ArrayList<String>();
         for (WebElement element : elements) {
             elementsText.add(element.getText());
@@ -80,17 +87,12 @@ public class ProductsTest extends BaseTest {
         Assert.assertEquals(elementsText, sortElementsText);
     }
 
-    public void addProductToCart() {
-        login();
-        productsPage.clickProductItem(ProductsTestConstants.PRODUCT_NAME, ProductsTestConstants.ADD_PRODUCT_CLASS);
-    }
-
     public void login() {
         loginPage.openPage();
         loginPage.login(LoginPageConstants.USERNAME, LoginPageConstants.PASSWORD);
     }
 
     public List<WebElement> initElements() {
-        return productsPage.getElements();
+        return productsPage.getProductElements();
     }
 }

@@ -8,8 +8,8 @@ import pages.Constants.CartPageConstants;
 import java.util.List;
 
 public class CartPage extends BasePage {
-    public CartPage(WebDriver driver) {
-        super(driver);
+    public CartPage(WebDriver driver, String url) {
+        super(driver, url);
     }
 
     public static final String CART_ITEM = "//*[text() = '%s']/ancestor::*[@class='cart_item']";
@@ -22,7 +22,8 @@ public class CartPage extends BasePage {
      * Open card page
      */
     public void openPage() {
-        driver.get(CartPageConstants.URL);
+        String cartUrl = url + CartPageConstants.URL;
+        driver.get(cartUrl);
     }
 
     /**

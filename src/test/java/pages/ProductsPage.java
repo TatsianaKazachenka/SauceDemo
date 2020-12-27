@@ -8,8 +8,8 @@ import org.openqa.selenium.support.ui.Select;
 import java.util.List;
 
 public class ProductsPage extends BasePage {
-    public ProductsPage(WebDriver driver) {
-        super(driver);
+    public ProductsPage(WebDriver driver, String url) {
+        super(driver, url);
     }
 
     public static final String PRODUCT_ITEM = "//*[text() = '%s']/ancestor::*[@class='inventory_item']";
@@ -65,7 +65,7 @@ public class ProductsPage extends BasePage {
      *
      * @return
      */
-    public List<WebElement> getElements() {
+    public List<WebElement> getProductElements() {
         return driver.findElements(PRODUCTS_ITEM);
     }
 
