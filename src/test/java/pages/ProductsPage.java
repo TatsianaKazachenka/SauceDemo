@@ -8,11 +8,11 @@ import org.openqa.selenium.support.ui.Select;
 import java.util.List;
 
 public class ProductsPage extends BasePage {
-    public ProductsPage(WebDriver driver){
+    public ProductsPage(WebDriver driver) {
         super(driver);
     }
 
-    public static final String PRODUCT_ITEM ="//*[text() = '%s']/ancestor::*[@class='inventory_item']";
+    public static final String PRODUCT_ITEM = "//*[text() = '%s']/ancestor::*[@class='inventory_item']";
     public static final String PRODUCT_TO_CART_BTN = "//button[contains(@class, '%s')]";
     public static final String PRODUCT_SORT = "//*[@id='inventory_filter_container']/select[@class='product_sort_container']";
     public static final By PRODUCT_PRICE = By.xpath("//*[@class='inventory_item_price']");
@@ -21,54 +21,60 @@ public class ProductsPage extends BasePage {
 
     /**
      * get the product by name
+     *
      * @param productName
      * @return web element product
      */
-    public WebElement getProduct(String productName){
+    public WebElement getProduct(String productName) {
         return driver.findElement(By.xpath(String.format(PRODUCT_ITEM, productName)));
     }
 
     /**
      * click on the item product
+     *
      * @param productName
      * @param nameClick
      */
-    public void clickProductItem(String productName, String nameClick){
+    public void clickProductItem(String productName, String nameClick) {
         getProduct(productName)
                 .findElement(By.xpath(String.format(PRODUCT_TO_CART_BTN, nameClick))).click();
     }
 
     /**
      * get the product price by name
+     *
      * @param productName
      * @return product price
      */
-    public String getProductPrice(String productName){
+    public String getProductPrice(String productName) {
         return getProduct(productName)
                 .findElement(PRODUCT_PRICE).getText().replace("$", "").trim();
     }
 
     /**
      * get the count product badge
+     *
      * @return count
      */
-    public String getProductCountToBadge(){
+    public String getProductCountToBadge() {
         return driver.findElement(PRODUCT_COUNT_BADGE).getText().trim();
     }
 
     /**
      * get all products
+     *
      * @return
      */
-    public List<WebElement> getElements(){
+    public List<WebElement> getElements() {
         return driver.findElements(PRODUCTS_ITEM);
     }
 
     /**
      * sorting the product list
+     *
      * @param typeSort
      */
-    public void clickSortProducts(String typeSort){
+    public void clickSortProducts(String typeSort) {
         Select select = new Select(driver.findElement(By.xpath(PRODUCT_SORT)));
         select.selectByValue(typeSort);
     }

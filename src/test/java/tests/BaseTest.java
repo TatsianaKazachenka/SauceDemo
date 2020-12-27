@@ -19,7 +19,7 @@ public class BaseTest {
     CartPage cartPage;
 
     @BeforeMethod
-    public void initTest(){
+    public void initTest() {
         System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
         ChromeOptions options = new ChromeOptions();
         options.addArguments("-incognito");
@@ -32,7 +32,7 @@ public class BaseTest {
     }
 
     @AfterMethod(alwaysRun = true)
-    public void endTest(){
+    public void endTest() {
         driver.quit();
     }
 }

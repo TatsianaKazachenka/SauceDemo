@@ -1,4 +1,4 @@
 package tests;
 
-public class CartTest extends BaseTest{
+public class CartTest extends BaseTest {
 }

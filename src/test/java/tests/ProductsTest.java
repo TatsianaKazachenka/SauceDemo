@@ -51,7 +51,7 @@ public class ProductsTest extends BaseTest {
     public void mappingItemProductsToCartTest() {
         login();
         int count = initElements().size();
-        for (int i = 0; i < count; i++){
+        for (int i = 0; i < count; i++) {
             List<WebElement> elements = productsPage.getElements();
             String nameProduct = elements.get(i).getText();
             productsPage.clickProductItem(nameProduct, ProductsTestConstants.ADD_PRODUCT_CLASS);
@@ -68,7 +68,7 @@ public class ProductsTest extends BaseTest {
         productsPage.clickSortProducts(ProductsTestConstants.PRODUCT_TYPE_SORT);
         List<WebElement> elements = productsPage.getElements();
         ArrayList<String> elementsText = new ArrayList<String>();
-        for (WebElement element: elements){
+        for (WebElement element : elements) {
             elementsText.add(element.getText());
         }
         ArrayList<String> sortElementsText = elementsText;
@@ -80,17 +80,17 @@ public class ProductsTest extends BaseTest {
         Assert.assertEquals(elementsText, sortElementsText);
     }
 
-    public void addProductToCart(){
+    public void addProductToCart() {
         login();
         productsPage.clickProductItem(ProductsTestConstants.PRODUCT_NAME, ProductsTestConstants.ADD_PRODUCT_CLASS);
     }
 
-    public void login(){
+    public void login() {
         loginPage.openPage();
         loginPage.login(LoginPageConstants.USERNAME, LoginPageConstants.PASSWORD);
     }
 
-    public List<WebElement> initElements(){
+    public List<WebElement> initElements() {
         return productsPage.getElements();
     }
 }

@@ -4,15 +4,17 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import pages.Constants.LoginPageConstants;
 
-public class LoginPage  extends BasePage {
+public class LoginPage extends BasePage {
     public LoginPage(WebDriver driver) {
         super(driver);
     }
+
     public static final By USERNAME_INPUT = By.xpath("//*[@data-test='username']");
     public static final By PASSWORD_INPUT = By.xpath("//*[@data-test='password']");
 
     /**
      * Login to the site
+     *
      * @param username
      * @param password
      */
