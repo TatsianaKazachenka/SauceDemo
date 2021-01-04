@@ -3,13 +3,14 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import pages.Constants.BasePageConstants;
 import pages.Constants.CartPageConstants;
 
 import java.util.List;
 
 public class CartPage extends BasePage {
-    public CartPage(WebDriver driver, String url) {
-        super(driver, url);
+    public CartPage(WebDriver driver) {
+        super(driver);
     }
 
     public static final String CART_ITEM = "//*[text() = '%s']/ancestor::*[@class='cart_item']";
@@ -22,7 +23,7 @@ public class CartPage extends BasePage {
      * Open card page
      */
     public void openPage() {
-        String cartUrl = url + CartPageConstants.URL;
+        String cartUrl = BasePageConstants.BASE_URL + CartPageConstants.URL;
         driver.get(cartUrl);
     }
 

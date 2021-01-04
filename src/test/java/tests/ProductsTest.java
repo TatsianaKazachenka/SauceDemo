@@ -3,20 +3,18 @@ package tests;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pages.Constants.LoginPageConstants;
+import tests.Constants.LoginTestConstants;
 import tests.Constants.ProductsTestConstants;
 
 import java.util.*;
 
 public class ProductsTest extends BaseTest {
-    public static final String ADD_PRODUCT_CLASS = "btn_primary";
-    public static final String REMOVE_PRODUCT_CLASS = "btn_secondary";
     public static final String PRODUCT_TYPE_SORT = "az";
 
     @Test
     public void addProductToCartTest() {
         login();
-        productsPage.clickProductItem(ProductsTestConstants.PRODUCT_NAME, ADD_PRODUCT_CLASS);
+        productsPage.clickAddOrRemoveProductItem(ProductsTestConstants.PRODUCT_NAME, true);
 
         String price_on_product = productsPage.getProductPrice(ProductsTestConstants.PRODUCT_NAME);
         cartPage.openPage();
@@ -33,13 +31,13 @@ public class ProductsTest extends BaseTest {
     @Test
     public void removeProductFromCartTest() {
         login();
-        productsPage.clickProductItem(ProductsTestConstants.PRODUCT_NAME, ADD_PRODUCT_CLASS);
+        productsPage.clickAddOrRemoveProductItem(ProductsTestConstants.PRODUCT_NAME, true);
 
         cartPage.openPage();
         boolean isCheckedProduct = cartPage.isCheckedProduct(ProductsTestConstants.PRODUCT_NAME);
         if (isCheckedProduct) {
             driver.navigate().back();
-            productsPage.clickProductItem(ProductsTestConstants.PRODUCT_NAME, REMOVE_PRODUCT_CLASS);
+            productsPage.clickAddOrRemoveProductItem(ProductsTestConstants.PRODUCT_NAME, false);
             cartPage.openPage();
         }
         Assert.assertTrue(isCheckedProduct);
@@ -48,7 +46,7 @@ public class ProductsTest extends BaseTest {
     @Test
     public void checkedAddProductToCartBadgeTest() {
         login();
-        productsPage.clickProductItem(ProductsTestConstants.PRODUCT_NAME, ADD_PRODUCT_CLASS);
+        productsPage.clickAddOrRemoveProductItem(ProductsTestConstants.PRODUCT_NAME, true);
 
         String count = productsPage.getProductCountToBadge();
         Assert.assertEquals(count, "1");
@@ -61,7 +59,7 @@ public class ProductsTest extends BaseTest {
         for (int i = 0; i < count; i++) {
             List<WebElement> elements = productsPage.getProductElements();
             String nameProduct = elements.get(i).getText();
-            productsPage.clickProductItem(nameProduct, ADD_PRODUCT_CLASS);
+            productsPage.clickAddOrRemoveProductItem(nameProduct, true);
             cartPage.openPage();
             String nameProductCart = cartPage.getCartItemName();
             Assert.assertEquals(nameProduct, nameProductCart);
@@ -89,7 +87,7 @@ public class ProductsTest extends BaseTest {
 
     public void login() {
         loginPage.openPage();
-        loginPage.login(LoginPageConstants.USERNAME, LoginPageConstants.PASSWORD);
+        loginPage.login(LoginTestConstants.USERNAME, LoginTestConstants.PASSWORD);
     }
 
     public List<WebElement> initElements() {

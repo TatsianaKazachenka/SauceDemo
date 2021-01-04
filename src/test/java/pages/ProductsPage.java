@@ -8,8 +8,8 @@ import org.openqa.selenium.support.ui.Select;
 import java.util.List;
 
 public class ProductsPage extends BasePage {
-    public ProductsPage(WebDriver driver, String url) {
-        super(driver, url);
+    public ProductsPage(WebDriver driver) {
+        super(driver);
     }
 
     public static final String PRODUCT_ITEM = "//*[text() = '%s']/ancestor::*[@class='inventory_item']";
@@ -19,6 +19,8 @@ public class ProductsPage extends BasePage {
     public static final By PRODUCT_COUNT_BADGE = By.xpath("//*[@id='shopping_cart_container']//*[contains(@class, 'shopping_cart_badge')]");
     public static final By PRODUCTS_ITEM = By.xpath("//*[@class='inventory_list']//*[@class='inventory_item']//*[@class='inventory_item_name']");
 
+    public static final String PRODUCT_ADD_TO_CART_BTN= "//button[contains(@class, 'btn_primary')]";
+    public static final String PRODUCT_REMOVE_FROM_CART_BTN= "//button[contains(@class, 'btn_secondary')]";
     /**
      * get the product by name
      *
@@ -33,8 +35,16 @@ public class ProductsPage extends BasePage {
      * click on the item product
      *
      * @param productName
-     * @param nameClick
+     * @param isAddToCart
      */
+    public void clickAddOrRemoveProductItem(String productName, boolean isAddToCart) {
+        if(isAddToCart) {
+            getProduct(productName).findElement(By.xpath(PRODUCT_ADD_TO_CART_BTN)).click();
+        } else {
+            getProduct(productName).findElement(By.xpath(PRODUCT_REMOVE_FROM_CART_BTN)).click();
+        }
+    }
+
     public void clickProductItem(String productName, String nameClick) {
         getProduct(productName)
                 .findElement(By.xpath(String.format(PRODUCT_TO_CART_BTN, nameClick))).click();

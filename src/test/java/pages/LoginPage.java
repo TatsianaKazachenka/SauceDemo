@@ -2,11 +2,12 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import pages.Constants.BasePageConstants;
 import pages.Constants.LoginPageConstants;
 
 public class LoginPage extends BasePage {
-    public LoginPage(WebDriver driver, String url) {
-        super(driver, url);
+    public LoginPage(WebDriver driver) {
+        super(driver);
     }
 
     public static final By USERNAME_INPUT = By.xpath("//*[@data-test='username']");
@@ -28,7 +29,7 @@ public class LoginPage extends BasePage {
      * Open login page
      */
     public void openPage() {
-        String loginUrl = url + LoginPageConstants.URL;
+        String loginUrl = BasePageConstants.BASE_URL + LoginPageConstants.URL;
         driver.get(loginUrl);
     }
 }

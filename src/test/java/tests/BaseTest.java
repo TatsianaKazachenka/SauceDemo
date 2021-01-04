@@ -11,16 +11,12 @@ import pages.ProductsPage;
 
 import java.util.concurrent.TimeUnit;
 
-import static pages.Constants.BasePageConstants.BASE_URL;
-
 public class BaseTest {
     WebDriver driver;
 
     LoginPage loginPage;
     ProductsPage productsPage;
     CartPage cartPage;
-
-    String url;
 
     @BeforeMethod
     public void initTest() {
@@ -30,10 +26,9 @@ public class BaseTest {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-        url = BASE_URL;
-        loginPage = new LoginPage(driver, url);
-        productsPage = new ProductsPage(driver, url);
-        cartPage = new CartPage(driver, url);
+        loginPage = new LoginPage(driver);
+        productsPage = new ProductsPage(driver);
+        cartPage = new CartPage(driver);
     }
 
     @AfterMethod(alwaysRun = true)
