@@ -5,7 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,9 +13,9 @@ import static org.jsoup.helper.Validate.fail;
 
 public class LoginPage extends BasePage<LoginPage> {
 
-    @FindBy(xpath="//*[@data-test='username']")
+    @FindBy(xpath = "//*[@data-test='username']")
     WebElement usernameInput;
-    @FindBy(xpath="//*[@data-test='password']")
+    @FindBy(xpath = "//*[@data-test='password']")
     WebElement userpasswordInput;
     @FindBy(id = "login-button")
     WebElement loginBtn;
@@ -59,12 +58,12 @@ public class LoginPage extends BasePage<LoginPage> {
         return this;
     }
 
-    public List<String> getListLogin(){
+    public List<String> getListLogin() {
         return Arrays.asList(listLogin.getText()
                 .replace("Accepted usernames are:\n", "").split("\n"));
     }
 
-    public String getErrorMessage(){
+    public String getErrorMessage() {
         return errorMessage.getText();
     }
 
@@ -72,7 +71,7 @@ public class LoginPage extends BasePage<LoginPage> {
         wait.until(ExpectedConditions.visibilityOf(errorMessage));
     }
 
-    public void closeErrorMessage(){
+    public void closeErrorMessage() {
         errorMessageCloseBtn.click();
     }
 
@@ -84,7 +83,7 @@ public class LoginPage extends BasePage<LoginPage> {
         }
     }
 
-    public boolean isEmptyField() {
+    public boolean isUsernamePasswordFieldsEmpty() {
         try {
             String name = usernameInput.getText();
             String password = userpasswordInput.getText();

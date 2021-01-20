@@ -6,6 +6,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import static org.jsoup.helper.Validate.fail;
@@ -19,14 +22,14 @@ public class ProductsPage extends BasePage {
     public static final String PRODUCT_TO_CART_BTN = "//button[contains(@class, '%s')]";
     public static final By PRODUCT_PRICE = By.xpath("//*[@class='inventory_item_price']");
     public static final By PRODUCT_LABEL = By.xpath("//*[contains(text(),'Product')]");
-    public static final String PRODUCT_ADD_TO_CART_BTN= "//button[contains(@class, 'btn_primary')]";
-    public static final String PRODUCT_REMOVE_FROM_CART_BTN= "//button[contains(@class, 'btn_secondary')]";
+    public static final String PRODUCT_ADD_TO_CART_BTN = "//button[contains(@class, 'btn_primary')]";
+    public static final String PRODUCT_REMOVE_FROM_CART_BTN = "//button[contains(@class, 'btn_secondary')]";
 
-    @FindBy(xpath="//*[@id='inventory_filter_container']/select[@class='product_sort_container']")
+    @FindBy(xpath = "//*[@id='inventory_filter_container']/select[@class='product_sort_container']")
     WebElement productSort;
-    @FindBy(xpath="//*[@id='shopping_cart_container']//*[contains(@class, 'shopping_cart_badge')]")
+    @FindBy(xpath = "//*[@id='shopping_cart_container']//*[contains(@class, 'shopping_cart_badge')]")
     WebElement productCountBadge;
-    @FindBy(xpath="//*[@class='inventory_list']//*[@class='inventory_item']//*[@class='inventory_item_name']")
+    @FindBy(xpath = "//*[@class='inventory_list']//*[@class='inventory_item']//*[@class='inventory_item_name']")
     List<WebElement> productsItem;
 
     /**
@@ -45,17 +48,13 @@ public class ProductsPage extends BasePage {
      * @param productName
      * @param isAddToCart
      */
-    public void clickAddOrRemoveProductItem(String productName, boolean isAddToCart) {
-        if(isAddToCart) {
+    public ProductsPage clickAddOrRemoveProductItem(String productName, boolean isAddToCart) {
+        if (isAddToCart) {
             getProduct(productName).findElement(By.xpath(PRODUCT_ADD_TO_CART_BTN)).click();
         } else {
             getProduct(productName).findElement(By.xpath(PRODUCT_REMOVE_FROM_CART_BTN)).click();
         }
-    }
-
-    public void clickProductItem(String productName, String nameClick) {
-        getProduct(productName)
-                .findElement(By.xpath(String.format(PRODUCT_TO_CART_BTN, nameClick))).click();
+        return this;
     }
 
     /**
@@ -119,6 +118,15 @@ public class ProductsPage extends BasePage {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public ArrayList<String> sortCollection(ArrayList<String> sortElementsText) {
+        Collections.sort(sortElementsText, new Comparator<String>() {
+            public int compare(String s1, String s2) {
+                return s1.toString().compareTo(s2.toString());
+            }
+        });
+        return sortElementsText;
     }
 
     @Override

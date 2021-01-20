@@ -6,7 +6,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-abstract class BasePage <T extends LoadableComponent<T>> extends LoadableComponent<T> implements IConstants {
+abstract class BasePage<T extends LoadableComponent<T>> extends LoadableComponent<T> implements IConstants {
     WebDriver driver;
     WebDriverWait wait;
 

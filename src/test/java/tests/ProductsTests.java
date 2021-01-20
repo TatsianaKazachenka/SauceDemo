@@ -11,7 +11,7 @@ public class ProductsTests extends BaseTests {
 
     @Test
     public void addProductToCartTest() {
-        login();
+        productsPage.openPage().waitForPageOpened();
         productsPage.clickAddOrRemoveProductItem(PRODUCT_NAME, true);
 
         String price_on_product = productsPage.getProductPrice(PRODUCT_NAME);
@@ -28,7 +28,7 @@ public class ProductsTests extends BaseTests {
 
     @Test
     public void removeProductFromCartTest() {
-        login();
+        productsPage.openPage().waitForPageOpened();
         productsPage.clickAddOrRemoveProductItem(PRODUCT_NAME, true);
 
         cartPage.openPage();
@@ -43,7 +43,7 @@ public class ProductsTests extends BaseTests {
 
     @Test
     public void checkedAddProductToCartBadgeTest() {
-        login();
+        productsPage.openPage().waitForPageOpened();
         productsPage.clickAddOrRemoveProductItem(PRODUCT_NAME, true);
 
         String count = productsPage.getProductCountToBadge();
@@ -52,8 +52,8 @@ public class ProductsTests extends BaseTests {
 
     @Test
     public void mappingItemProductsToCartTest() {
-        login();
-        int count = initElements().size();
+        productsPage.openPage().waitForPageOpened();
+        int count = productsPage.getProductElements().size();
         for (int i = 0; i < count; i++) {
             List<WebElement> elements = productsPage.getProductElements();
             String nameProduct = elements.get(i).getText();
@@ -67,28 +67,14 @@ public class ProductsTests extends BaseTests {
 
     @Test
     public void sortAtoZProductsTest() {
-        login();
+        productsPage.openPage().waitForPageOpened();
         productsPage.clickSortProducts(PRODUCT_TYPE_SORT);
         List<WebElement> elements = productsPage.getProductElements();
         ArrayList<String> elementsText = new ArrayList<String>();
         for (WebElement element : elements) {
             elementsText.add(element.getText());
         }
-        ArrayList<String> sortElementsText = elementsText;
-        Collections.sort(sortElementsText, new Comparator<String>() {
-            public int compare(String s1, String s2) {
-                return s1.toString().compareTo(s2.toString());
-            }
-        });
+        ArrayList<String> sortElementsText = productsPage.sortCollection(elementsText);
         Assert.assertEquals(elementsText, sortElementsText);
-    }
-
-    public void login() {
-        loginPage.openPage().waitMessageErrorDisplayed();
-        loginPage.login(USERNAME, PASSWORD);
-    }
-
-    public List<WebElement> initElements() {
-        return productsPage.getProductElements();
     }
 }

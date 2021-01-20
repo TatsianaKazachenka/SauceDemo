@@ -4,10 +4,11 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import static org.jsoup.helper.Validate.fail;
 
-public class MenuPage extends BasePage{
+public class MenuPage extends BasePage {
     public MenuPage(WebDriver driver) {
         super(driver);
     }
@@ -25,7 +26,7 @@ public class MenuPage extends BasePage{
     @FindBy(id = "logout_sidebar_link")
     WebElement hrefLogout;
     @FindBy(xpath = "//*[@id='menu_button_container']//*[contains(@class, 'button')]/button")
-            WebElement closeMenuBtn;
+    WebElement closeMenuBtn;
 
     public MenuPage openPage() {
         load();
@@ -53,9 +54,17 @@ public class MenuPage extends BasePage{
         }
     }
 
-    public void clickHref(String type){
+    public boolean isNotShowMenu() {
+        try {
+            return contentMenu.isEnabled();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public MenuPage clickHref(String type) {
         WebElement element = null;
-        switch (type){
+        switch (type) {
             case "allItem":
                 element = hrefAllItems;
                 break;
@@ -66,12 +75,13 @@ public class MenuPage extends BasePage{
                 element = hrefLogout;
                 break;
             default:
-                break;
+                throw new IllegalArgumentException(String.format("There is not such type '%s' !", type));
         }
         element.click();
+        return this;
     }
 
-    public MenuPage clickCloseBtn(){
+    public MenuPage clickCloseBtn() {
         closeMenuBtn.click();
         return this;
     }

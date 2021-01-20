@@ -14,13 +14,13 @@ public class CartPage extends BasePage {
     public static final By CART_ITEM_QUANTITY = By.xpath("//*[@class='cart_quantity']");
     public static final By CHECKOUT_BUTTON = By.xpath("//*[@class = 'btn_action checkout_button']");
 
-    @FindBy(xpath="//*[@class='cart_list']//*[@class='cart_item']//*[@class='inventory_item_name']")
+    @FindBy(xpath = "//*[@class='cart_list']//*[@class='cart_item']//*[@class='inventory_item_name']")
     List<WebElement> cartItems;
-    @FindBy(xpath="//*[@id='cart_contents_container']//*[@class='cart_item']//*[@class='inventory_item_name']")
+    @FindBy(xpath = "//*[@id='cart_contents_container']//*[@class='cart_item']//*[@class='inventory_item_name']")
     WebElement cartItemName;
-    @FindBy(xpath="//*[@id='cart_contents_container']//button[contains(@class, 'cart_button')]")
+    @FindBy(xpath = "//*[@id='cart_contents_container']//button[contains(@class, 'cart_button')]")
     WebElement cartRemoveBtn;
-    @FindBy(xpath="//*[@class='cart_list']//*[@class='cart_item']")
+    @FindBy(xpath = "//*[@class='cart_list']//*[@class='cart_item']")
     WebElement cartEmptyItems;
     @FindBy(xpath = "//*[@id='cart_contents_container']//a[@class='btn_secondary']")
     WebElement btnContinueShopping;
@@ -34,6 +34,7 @@ public class CartPage extends BasePage {
         isLoaded();
         return this;
     }
+
     /**
      * Open card page
      */
@@ -63,7 +64,6 @@ public class CartPage extends BasePage {
         boolean isPoduct = false;
         for (WebElement element : elements) {
             isPoduct = element.getText().equals(productName);
-            if (isPoduct) continue;
         }
         return isPoduct;
     }
@@ -99,8 +99,9 @@ public class CartPage extends BasePage {
         return cartItemName.getText();
     }
 
-    public void clickRemoveBtn(){
+    public CartPage clickRemoveBtn() {
         cartRemoveBtn.click();
+        return this;
     }
 
     public boolean isEmptyCart() {
@@ -110,8 +111,10 @@ public class CartPage extends BasePage {
             return false;
         }
     }
-    public void clickContinueShopping(){
+
+    public CartPage clickContinueShopping() {
         btnContinueShopping.click();
+        return this;
     }
 
     @Override
