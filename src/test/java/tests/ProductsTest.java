@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 
 import java.util.*;
 
-public class ProductsTests extends BaseTests {
+public class ProductsTest extends BaseTest {
     public static final String PRODUCT_TYPE_SORT = "az";
 
     @Test

@@ -3,7 +3,7 @@ package tests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class MenuTests extends BaseTests {
+public class MenuTest extends BaseTest {
 
     @Test
     public void openMenuTest() {
@@ -40,7 +40,6 @@ public class MenuTests extends BaseTests {
         menuPage.openPage()
                 .waitForPageOpened()
                 .clickCloseBtn();
-        ;
         Assert.assertTrue(menuPage.isNotShowMenu());
     }
 }

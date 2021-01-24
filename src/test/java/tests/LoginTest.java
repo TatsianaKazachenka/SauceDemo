@@ -5,7 +5,7 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 
-public class LoginTests extends BaseTests {
+public class LoginTest extends BaseTest {
     public static final String EMPTY_FIELD = "";
     public static final String ERROR_LOGIN = "error_login";
     public static final String ERROR_PASSWORD = "error_password";
