@@ -14,7 +14,7 @@ import constants.ITestConstants;
 
 import java.util.concurrent.TimeUnit;
 
-public class BaseTests implements ITestConstants {
+public class BaseTest implements ITestConstants {
     WebDriver driver;
 
     LoginPage loginPage;

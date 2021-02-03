@@ -3,7 +3,7 @@ package tests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class CartTests extends BaseTests {
+public class CartTest extends BaseTest {
     @Test
     public void removeItemCartTest() {
         productsPage.openPage()
