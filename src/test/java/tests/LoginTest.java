@@ -1,5 +1,6 @@
 package tests;
 
+import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -11,25 +12,25 @@ public class LoginTest extends BaseTest {
     public static final String ERROR_PASSWORD = "error_password";
 
     @Test
+    @Description("Validation login with empty credits")
     public void emptyFieldTest() {
-        loginPage.login(EMPTY_FIELD, EMPTY_FIELD);
-        loginPage.waitMessageErrorDisplayed();
+        loginSteps.login(EMPTY_FIELD, EMPTY_FIELD);
         String message = loginPage.getErrorMessage();
         Assert.assertEquals(message, ERROR_MESSAGE_EMPTY);
     }
 
     @Test
+    @Description("Validation login with empty password")
     public void emptyPasswordTest() {
-        loginPage.openPage().waitMessageErrorDisplayed();
-        loginPage.login(USERNAME, EMPTY_FIELD);
-        loginPage.waitMessageErrorDisplayed();
+        loginSteps.login(USERNAME, EMPTY_FIELD);
         String message = loginPage.getErrorMessage();
         Assert.assertEquals(message, ERROR_MESSAGE_EMPTY_PASSWORD);
     }
 
     @Test
+    @Description("Login verification with all test credits")
     public void verificationLoginTest() {
-        loginPage.openPage().waitMessageErrorDisplayed();
+        loginPage.openPage();
         List<String> logins = loginPage.getListLogin();
         for (String login : logins) {
             loginPage.login(login, PASSWORD);
@@ -40,28 +41,25 @@ public class LoginTest extends BaseTest {
     }
 
     @Test
+    @Description("Validation login with empty password")
     public void checkingMessageIncorrectLogin() {
-        loginPage.openPage().waitMessageErrorDisplayed();
-        loginPage.login(ERROR_LOGIN, PASSWORD);
-        loginPage.waitMessageErrorDisplayed();
+        loginSteps.login(ERROR_LOGIN, PASSWORD);
         String message = loginPage.getErrorMessage();
         Assert.assertEquals(message, ERROR_MESSAGE_LOGIN_OR_PASSWORD);
     }
 
     @Test
+    @Description("Checking the login with an invalid login")
     public void checkingMessageIncorrectPassword() {
-        loginPage.openPage().waitMessageErrorDisplayed();
-        loginPage.login(USERNAME, ERROR_PASSWORD);
-        loginPage.waitMessageErrorDisplayed();
+        loginSteps.login(USERNAME, ERROR_PASSWORD);
         String message = loginPage.getErrorMessage();
         Assert.assertEquals(message, ERROR_MESSAGE_LOGIN_OR_PASSWORD);
     }
 
     @Test
+    @Description("Checking if the error message is closed")
     public void closeErrorMessageTest() {
-        loginPage.openPage().waitMessageErrorDisplayed();
-        loginPage.login(USERNAME, ERROR_PASSWORD);
-        loginPage.waitMessageErrorDisplayed();
+        loginSteps.login(USERNAME, ERROR_PASSWORD);
         if (loginPage.isShowErrorMessage()) {
             loginPage.closeErrorMessage();
         }

@@ -1,10 +1,12 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+import utils.AllureUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,6 +50,7 @@ public class ProductsPage extends BasePage {
      * @param productName
      * @param isAddToCart
      */
+    @Step("Adding or removing product '{productName}' to cart")
     public ProductsPage clickAddOrRemoveProductItem(String productName, boolean isAddToCart) {
         if (isAddToCart) {
             getProduct(productName).findElement(By.xpath(PRODUCT_ADD_TO_CART_BTN)).click();
@@ -64,6 +67,7 @@ public class ProductsPage extends BasePage {
      * @return product price
      */
     public String getProductPrice(String productName) {
+        AllureUtils.takeScreenshot(driver);
         return getProduct(productName)
                 .findElement(PRODUCT_PRICE).getText().replace("$", "").trim();
     }
@@ -73,6 +77,7 @@ public class ProductsPage extends BasePage {
      *
      * @return count
      */
+    @Step("Get the count product badge")
     public String getProductCountToBadge() {
         return productCountBadge.getText().trim();
     }
@@ -91,6 +96,7 @@ public class ProductsPage extends BasePage {
      *
      * @param typeSort
      */
+    @Step("Sorting the product list")
     public void clickSortProducts(String typeSort) {
         Select select = new Select(productSort);
         select.selectByValue(typeSort);
@@ -106,6 +112,7 @@ public class ProductsPage extends BasePage {
         return this;
     }
 
+    @Step("Opening Products")
     public ProductsPage openPage() {
         load();
         isLoaded();

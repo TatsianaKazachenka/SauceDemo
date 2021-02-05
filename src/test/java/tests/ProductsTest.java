@@ -1,5 +1,6 @@
 package tests;
 
+import io.qameta.allure.Description;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -10,9 +11,9 @@ public class ProductsTest extends BaseTest {
     public static final String PRODUCT_TYPE_SORT = "az";
 
     @Test
+    @Description("Checking if an item was added to the cart")
     public void addProductToCartTest() {
-        productsPage.openPage().waitForPageOpened();
-        productsPage.clickAddOrRemoveProductItem(PRODUCT_NAME, true);
+        productsSteps.openPageAndClickAddOrRemoveItem(PRODUCT_NAME, true);
 
         String price_on_product = productsPage.getProductPrice(PRODUCT_NAME);
         cartPage.openPage();
@@ -27,9 +28,9 @@ public class ProductsTest extends BaseTest {
     }
 
     @Test
+    @Description("Checking the removal of an item from the cart")
     public void removeProductFromCartTest() {
-        productsPage.openPage().waitForPageOpened();
-        productsPage.clickAddOrRemoveProductItem(PRODUCT_NAME, true);
+        productsSteps.openPageAndClickAddOrRemoveItem(PRODUCT_NAME, true);
 
         cartPage.openPage();
         boolean isCheckedProduct = cartPage.isCheckedProduct(PRODUCT_NAME);
@@ -42,17 +43,18 @@ public class ProductsTest extends BaseTest {
     }
 
     @Test
+    @Description("Checking the number of items in the cart on the badge")
     public void checkedAddProductToCartBadgeTest() {
-        productsPage.openPage().waitForPageOpened();
-        productsPage.clickAddOrRemoveProductItem(PRODUCT_NAME, true);
+        productsSteps.openPageAndClickAddOrRemoveItem(PRODUCT_NAME, true);
 
         String count = productsPage.getProductCountToBadge();
         Assert.assertEquals(count, "1");
     }
 
     @Test
+    @Description("Matching items in the cart")
     public void mappingItemProductsToCartTest() {
-        productsPage.openPage().waitForPageOpened();
+        productsSteps.openPage();
         int count = productsPage.getProductElements().size();
         for (int i = 0; i < count; i++) {
             List<WebElement> elements = productsPage.getProductElements();
@@ -66,8 +68,9 @@ public class ProductsTest extends BaseTest {
     }
 
     @Test
-    public void sortAtoZProductsTest() {
-        productsPage.openPage().waitForPageOpened();
+    @Description("Checking the sorting of goods")
+    public void sortProductsTest() {
+        productsSteps.openPage();
         productsPage.clickSortProducts(PRODUCT_TYPE_SORT);
         List<WebElement> elements = productsPage.getProductElements();
         ArrayList<String> elementsText = new ArrayList<String>();
