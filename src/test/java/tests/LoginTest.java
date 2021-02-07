@@ -36,7 +36,7 @@ public class LoginTest extends BaseTest {
             loginPage.login(login, PASSWORD);
             Assert.assertTrue(productsPage.isPageOpened());
             //open the login page to check the next user
-            loginPage.openPage().waitMessageErrorDisplayed();
+            loginPage.openPage();
         }
     }
 
