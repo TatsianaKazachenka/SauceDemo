@@ -4,7 +4,7 @@ import utils.PropertyReader;
 
 public interface ITestConstants {
     //for login
-    String USERNAME = System.getenv().getOrDefault("username", PropertyReader.getProperty("userneme"));;
+    String USERNAME = System.getenv().getOrDefault("username", PropertyReader.getProperty("username"));
     String PASSWORD = System.getenv().getOrDefault("password", PropertyReader.getProperty("password"));
     String ERROR_MESSAGE_EMPTY = "Epic sadface: Username is required";
     String ERROR_MESSAGE_EMPTY_PASSWORD = "Epic sadface: Password is required";
