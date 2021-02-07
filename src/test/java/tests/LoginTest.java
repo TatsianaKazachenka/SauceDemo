@@ -12,6 +12,7 @@ public class LoginTest extends BaseTest {
 
     @Test
     public void emptyFieldTest() {
+        loginPage.openPage();
         loginPage.login(EMPTY_FIELD, EMPTY_FIELD);
         loginPage.waitMessageErrorDisplayed();
         String message = loginPage.getErrorMessage();
@@ -20,7 +21,7 @@ public class LoginTest extends BaseTest {
 
     @Test
     public void emptyPasswordTest() {
-        loginPage.openPage().waitMessageErrorDisplayed();
+        loginPage.openPage();
         loginPage.login(USERNAME, EMPTY_FIELD);
         loginPage.waitMessageErrorDisplayed();
         String message = loginPage.getErrorMessage();
@@ -29,7 +30,7 @@ public class LoginTest extends BaseTest {
 
     @Test
     public void verificationLoginTest() {
-        loginPage.openPage().waitMessageErrorDisplayed();
+        loginPage.openPage();
         List<String> logins = loginPage.getListLogin();
         for (String login : logins) {
             loginPage.login(login, PASSWORD);
@@ -41,7 +42,7 @@ public class LoginTest extends BaseTest {
 
     @Test
     public void checkingMessageIncorrectLogin() {
-        loginPage.openPage().waitMessageErrorDisplayed();
+        loginPage.openPage();
         loginPage.login(ERROR_LOGIN, PASSWORD);
         loginPage.waitMessageErrorDisplayed();
         String message = loginPage.getErrorMessage();
@@ -50,7 +51,7 @@ public class LoginTest extends BaseTest {
 
     @Test
     public void checkingMessageIncorrectPassword() {
-        loginPage.openPage().waitMessageErrorDisplayed();
+        loginPage.openPage();
         loginPage.login(USERNAME, ERROR_PASSWORD);
         loginPage.waitMessageErrorDisplayed();
         String message = loginPage.getErrorMessage();
@@ -59,7 +60,7 @@ public class LoginTest extends BaseTest {
 
     @Test
     public void closeErrorMessageTest() {
-        loginPage.openPage().waitMessageErrorDisplayed();
+        loginPage.openPage();
         loginPage.login(USERNAME, ERROR_PASSWORD);
         loginPage.waitMessageErrorDisplayed();
         if (loginPage.isShowErrorMessage()) {
