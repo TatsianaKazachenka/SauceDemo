@@ -89,7 +89,7 @@ public class LoginPage extends BasePage<LoginPage> {
     public boolean isUsernamePasswordFieldsEmpty() {
         try {
             String name = usernameInput.getText();
-            String password = this.passwordInput.getText();
+            String password = passwordInput.getText();
             return name.isEmpty() && password.isEmpty();
         } catch (Exception e) {
             return false;
