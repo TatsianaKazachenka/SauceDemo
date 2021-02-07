@@ -52,22 +52,6 @@ public class ProductsTest extends BaseTest {
     }
 
     @Test
-    @Description("Matching items in the cart")
-    public void mappingItemProductsToCartTest() {
-        productsSteps.openPage();
-        int count = productsPage.getProductElements().size();
-        for (int i = 0; i < count; i++) {
-            List<WebElement> elements = productsPage.getProductElements();
-            String nameProduct = elements.get(i).getText();
-            productsPage.clickAddOrRemoveProductItem(nameProduct, true);
-            cartPage.openPage();
-            String nameProductCart = cartPage.getCartItemName();
-            Assert.assertEquals(nameProduct, nameProductCart);
-            driver.navigate().back();
-        }
-    }
-
-    @Test
     @Description("Checking the sorting of goods")
     public void sortProductsTest() {
         productsSteps.openPage();

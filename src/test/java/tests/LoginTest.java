@@ -28,19 +28,6 @@ public class LoginTest extends BaseTest {
     }
 
     @Test
-    @Description("Login verification with all test credits")
-    public void verificationLoginTest() {
-        loginPage.openPage();
-        List<String> logins = loginPage.getListLogin();
-        for (String login : logins) {
-            loginPage.login(login, PASSWORD);
-            Assert.assertTrue(productsPage.isPageOpened());
-            //open the login page to check the next user
-            loginPage.openPage();
-        }
-    }
-
-    @Test
     @Description("Validation login with empty password")
     public void checkingMessageIncorrectLogin() {
         loginSteps.login(ERROR_LOGIN, PASSWORD);
