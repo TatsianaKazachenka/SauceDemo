@@ -20,6 +20,8 @@ public class ProductsPage extends BasePage {
         super(driver);
     }
 
+    public static final String PRODUCT_NOT_FOUND = "not found";
+
     public static final String PRODUCT_ITEM = "//*[text() = '%s']/ancestor::*[@class='inventory_item']";
     public static final String PRODUCT_TO_CART_BTN = "//button[contains(@class, '%s')]";
     public static final By PRODUCT_PRICE = By.xpath("//*[@class='inventory_item_price']");
@@ -41,7 +43,13 @@ public class ProductsPage extends BasePage {
      * @return web element product
      */
     public WebElement getProduct(String productName) {
+        try {
         return driver.findElement(By.xpath(String.format(PRODUCT_ITEM, productName)));
+        }
+        catch (Exception ex){
+            AllureUtils.takeScreenshot(driver);
+        }
+        return null;
     }
 
     /**
@@ -67,9 +75,16 @@ public class ProductsPage extends BasePage {
      * @return product price
      */
     public String getProductPrice(String productName) {
-        AllureUtils.takeScreenshot(driver);
-        return getProduct(productName)
-                .findElement(PRODUCT_PRICE).getText().replace("$", "").trim();
+        try {
+            return getProduct(productName)
+                    .findElement(PRODUCT_PRICE).getText()
+                    .replace("$", "")
+                    .trim();
+        }
+        catch (Exception ex){
+            AllureUtils.takeScreenshot(driver);
+        }
+        return PRODUCT_NOT_FOUND;
     }
 
     /**

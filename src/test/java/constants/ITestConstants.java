@@ -9,6 +9,6 @@ public interface ITestConstants {
     String ERROR_MESSAGE_LOGIN_OR_PASSWORD = "Epic sadface: Username and password do not match any user in this service";
 
     //for product
-    String PRODUCT_NAME = "Sauce Labs Backpack";
+    String PRODUCT_NAME = "Sauce Labs Fleece Jacket";
     String PRODUCT_NOT_FOUND = "not found";
 }
