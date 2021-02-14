@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,17 +14,17 @@ import static org.jsoup.helper.Validate.fail;
 
 public class LoginPage extends BasePage<LoginPage> {
 
-    @FindBy(xpath = "//*[@data-test='username']")
+    @FindBy(xpath = "//*[@id='user-name']")
     WebElement usernameInput;
-    @FindBy(xpath = "//*[@data-test='password']")
-    WebElement userpasswordInput;
+    @FindBy(xpath = "//*[@id='password']")
+    WebElement passwordInput;
     @FindBy(id = "login-button")
     WebElement loginBtn;
     @FindBy(xpath = "//*[@id='login_credentials']")
     WebElement listLogin;
     @FindBy(xpath = "//*[@id='login_button_container']//*[@data-test='error']")
     WebElement errorMessage;
-    @FindBy(xpath = "//*[@id=\"login_button_container\"]//button[@class='error-button']")
+    @FindBy(xpath = "//*[@id='login_button_container']//button[@class='error-button']")
     WebElement errorMessageCloseBtn;
     @FindBy(xpath = "//*[@id='login_button_container']")
     WebElement loginContent;
@@ -43,9 +44,10 @@ public class LoginPage extends BasePage<LoginPage> {
      * @param username
      * @param password
      */
+    @Step("Login")
     public void login(String username, String password) {
         usernameInput.sendKeys(username);
-        userpasswordInput.sendKeys(password);
+        passwordInput.sendKeys(password);
         loginBtn.click();
     }
 
@@ -63,6 +65,7 @@ public class LoginPage extends BasePage<LoginPage> {
                 .replace("Accepted usernames are:\n", "").split("\n"));
     }
 
+    @Step("Getting an error message")
     public String getErrorMessage() {
         return errorMessage.getText();
     }
@@ -86,7 +89,7 @@ public class LoginPage extends BasePage<LoginPage> {
     public boolean isUsernamePasswordFieldsEmpty() {
         try {
             String name = usernameInput.getText();
-            String password = userpasswordInput.getText();
+            String password = passwordInput.getText();
             return name.isEmpty() && password.isEmpty();
         } catch (Exception e) {
             return false;
