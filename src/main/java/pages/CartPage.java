@@ -1,6 +1,7 @@
 package pages;
 
 import io.qameta.allure.Step;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,7 +11,10 @@ import utils.AllureUtils;
 
 import java.util.List;
 
+@Log4j2
 public class CartPage extends BasePage {
+    public static final String ITEM_NOT_FOUND = "not found";
+
     public static final String CART_ITEM = "//*[text() = '%s']/ancestor::*[@class='cart_item']";
     public static final By CART_ITEM_PRICE = By.xpath("//*[@class='inventory_item_price']");
     public static final By CART_ITEM_QUANTITY = By.xpath("//*[@class='cart_quantity']");
@@ -55,6 +59,7 @@ public class CartPage extends BasePage {
      */
     @Step("Receiving product '{productName}' in the cart")
     public WebElement getCartItem(String productName) {
+        log.info("Get cart item " + productName);
         return driver.findElement(By.xpath(String.format(CART_ITEM, productName)));
     }
 
@@ -82,9 +87,15 @@ public class CartPage extends BasePage {
      */
     @Step("Getting the price of an item in the cart")
     public String getCartItemPrice(String productName) {
-        AllureUtils.takeScreenshot(driver);
-        return getCartItem(productName)
-                .findElement(CART_ITEM_PRICE).getText();
+        try {
+            return getCartItem(productName)
+                    .findElement(CART_ITEM_PRICE).getText();
+        }
+        catch (Exception ex){
+            log.info("Get cart item price " + productName);
+            AllureUtils.takeScreenshot(driver);
+        }
+        return ITEM_NOT_FOUND;
     }
 
     /**
@@ -95,9 +106,15 @@ public class CartPage extends BasePage {
      */
     @Step("Getting the quantity of an item in the cart")
     public String getCartItemQuantity(String productName) {
-        AllureUtils.takeScreenshot(driver);
-        return getCartItem(productName)
-                .findElement(CART_ITEM_QUANTITY).getText();
+        try {
+            return getCartItem(productName)
+                    .findElement(CART_ITEM_QUANTITY).getText();
+        }
+        catch (Exception ex){
+            log.info("Get cart item quantity" + productName);
+            AllureUtils.takeScreenshot(driver);
+        }
+        return ITEM_NOT_FOUND;
     }
 
     /**
@@ -107,6 +124,7 @@ public class CartPage extends BasePage {
      */
     @Step("Removing a product from the cart")
     public String getCartItemName() {
+        log.info("Removing a product from the cart");
         return cartItemName.getText();
     }
 

@@ -1,6 +1,7 @@
 package pages;
 
 import io.qameta.allure.Step;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -15,6 +16,7 @@ import java.util.List;
 
 import static org.jsoup.helper.Validate.fail;
 
+@Log4j2
 public class ProductsPage extends BasePage {
     public ProductsPage(WebDriver driver) {
         super(driver);
@@ -43,6 +45,7 @@ public class ProductsPage extends BasePage {
      * @return web element product
      */
     public WebElement getProduct(String productName) {
+        log.info("get the product by name " + productName);
         try {
         return driver.findElement(By.xpath(String.format(PRODUCT_ITEM, productName)));
         }
@@ -61,8 +64,10 @@ public class ProductsPage extends BasePage {
     @Step("Adding or removing product '{productName}' to cart")
     public ProductsPage clickAddOrRemoveProductItem(String productName, boolean isAddToCart) {
         if (isAddToCart) {
+            log.info(String.format("Adding product '%s' to cart", productName));
             getProduct(productName).findElement(By.xpath(PRODUCT_ADD_TO_CART_BTN)).click();
         } else {
+            log.info(String.format("Removing product '%s' to cart", productName));
             getProduct(productName).findElement(By.xpath(PRODUCT_REMOVE_FROM_CART_BTN)).click();
         }
         return this;
@@ -75,6 +80,7 @@ public class ProductsPage extends BasePage {
      * @return product price
      */
     public String getProductPrice(String productName) {
+        log.info("get the product price by name " + productName);
         try {
             return getProduct(productName)
                     .findElement(PRODUCT_PRICE).getText()

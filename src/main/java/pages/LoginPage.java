@@ -1,6 +1,7 @@
 package pages;
 
 import io.qameta.allure.Step;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,6 +13,7 @@ import java.util.List;
 
 import static org.jsoup.helper.Validate.fail;
 
+@Log4j2
 public class LoginPage extends BasePage<LoginPage> {
 
     @FindBy(xpath = "//*[@id='user-name']")
@@ -46,6 +48,7 @@ public class LoginPage extends BasePage<LoginPage> {
      */
     @Step("Login")
     public void login(String username, String password) {
+        log.info("Login to the site");
         usernameInput.sendKeys(username);
         passwordInput.sendKeys(password);
         loginBtn.click();
@@ -75,6 +78,7 @@ public class LoginPage extends BasePage<LoginPage> {
     }
 
     public void closeErrorMessage() {
+        log.info("close the error message");
         errorMessageCloseBtn.click();
     }
 
