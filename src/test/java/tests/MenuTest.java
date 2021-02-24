@@ -1,44 +1,40 @@
 package tests;
 
+import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class MenuTest extends BaseTest {
 
     @Test
+    @Description("Checking if the side menu is open")
     public void openMenuTest() {
-        menuPage.openPage().waitForPageOpened();
+        menuSteps.openPage();
         Assert.assertTrue(menuPage.isShowMenu());
     }
 
-    @Test
+    @Test(description = "checking click all item")
     public void clickAllItemTest() {
-        menuPage.openPage()
-                .waitForPageOpened()
-                .clickHref("allItem");
+        menuSteps.clickHref("allItem");
         Assert.assertTrue(productsPage.isPageOpened());
     }
 
-    @Test
+    @Test(description = "checking click about item")
     public void clickAboutTest() {
-        menuPage.openPage()
-                .waitForPageOpened()
-                .clickHref("about");
+        menuSteps.clickHref("about");
         Assert.assertTrue(menuPage.isWaitForAboutPageOpened());
     }
 
-    @Test
+    @Test(description = "checking click logout")
     public void clickLogoutTest() {
-        menuPage.openPage()
-                .waitForPageOpened()
-                .clickHref("logout");
+        menuSteps.clickHref("logout");
         Assert.assertTrue(loginPage.isUsernamePasswordFieldsEmpty());
     }
 
     @Test
+    @Description("Side menu close check")
     public void closeMenuTest() {
-        menuPage.openPage()
-                .waitForPageOpened()
+        menuSteps.openPage()
                 .clickCloseBtn();
         Assert.assertTrue(menuPage.isNotShowMenu());
     }

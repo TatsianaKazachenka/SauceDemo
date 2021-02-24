@@ -1,10 +1,13 @@
 package pages;
 
+import io.qameta.allure.Step;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+import utils.AllureUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,10 +16,13 @@ import java.util.List;
 
 import static org.jsoup.helper.Validate.fail;
 
+@Log4j2
 public class ProductsPage extends BasePage {
     public ProductsPage(WebDriver driver) {
         super(driver);
     }
+
+    public static final String PRODUCT_NOT_FOUND = "not found";
 
     public static final String PRODUCT_ITEM = "//*[text() = '%s']/ancestor::*[@class='inventory_item']";
     public static final String PRODUCT_TO_CART_BTN = "//button[contains(@class, '%s')]";
@@ -39,7 +45,14 @@ public class ProductsPage extends BasePage {
      * @return web element product
      */
     public WebElement getProduct(String productName) {
+        log.info("get the product by name " + productName);
+        try {
         return driver.findElement(By.xpath(String.format(PRODUCT_ITEM, productName)));
+        }
+        catch (Exception ex){
+            AllureUtils.takeScreenshot(driver);
+        }
+        return null;
     }
 
     /**
@@ -48,10 +61,13 @@ public class ProductsPage extends BasePage {
      * @param productName
      * @param isAddToCart
      */
+    @Step("Adding or removing product '{productName}' to cart")
     public ProductsPage clickAddOrRemoveProductItem(String productName, boolean isAddToCart) {
         if (isAddToCart) {
+            log.info(String.format("Adding product '%s' to cart", productName));
             getProduct(productName).findElement(By.xpath(PRODUCT_ADD_TO_CART_BTN)).click();
         } else {
+            log.info(String.format("Removing product '%s' to cart", productName));
             getProduct(productName).findElement(By.xpath(PRODUCT_REMOVE_FROM_CART_BTN)).click();
         }
         return this;
@@ -64,8 +80,17 @@ public class ProductsPage extends BasePage {
      * @return product price
      */
     public String getProductPrice(String productName) {
-        return getProduct(productName)
-                .findElement(PRODUCT_PRICE).getText().replace("$", "").trim();
+        log.info("get the product price by name " + productName);
+        try {
+            return getProduct(productName)
+                    .findElement(PRODUCT_PRICE).getText()
+                    .replace("$", "")
+                    .trim();
+        }
+        catch (Exception ex){
+            AllureUtils.takeScreenshot(driver);
+        }
+        return PRODUCT_NOT_FOUND;
     }
 
     /**
@@ -73,6 +98,7 @@ public class ProductsPage extends BasePage {
      *
      * @return count
      */
+    @Step("Get the count product badge")
     public String getProductCountToBadge() {
         return productCountBadge.getText().trim();
     }
@@ -91,6 +117,7 @@ public class ProductsPage extends BasePage {
      *
      * @param typeSort
      */
+    @Step("Sorting the product list")
     public void clickSortProducts(String typeSort) {
         Select select = new Select(productSort);
         select.selectByValue(typeSort);
@@ -106,6 +133,7 @@ public class ProductsPage extends BasePage {
         return this;
     }
 
+    @Step("Opening Products")
     public ProductsPage openPage() {
         load();
         isLoaded();

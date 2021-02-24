@@ -1,5 +1,7 @@
 package pages;
 
+import io.qameta.allure.Step;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,6 +10,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import static org.jsoup.helper.Validate.fail;
 
+@Log4j2
 public class MenuPage extends BasePage {
     public MenuPage(WebDriver driver) {
         super(driver);
@@ -28,6 +31,7 @@ public class MenuPage extends BasePage {
     @FindBy(xpath = "//*[@id='menu_button_container']//*[contains(@class, 'button')]/button")
     WebElement closeMenuBtn;
 
+    @Step("Opening Menu")
     public MenuPage openPage() {
         load();
         return this;
@@ -46,7 +50,9 @@ public class MenuPage extends BasePage {
         }
     }
 
+    @Step("Check for menu appearance")
     public boolean isShowMenu() {
+        log.info("Show menu");
         try {
             return contentMenu.isDisplayed();
         } catch (Exception e) {
@@ -62,7 +68,9 @@ public class MenuPage extends BasePage {
         }
     }
 
+    @Step("Сhecking the following menu links")
     public MenuPage clickHref(String type) {
+        log.info("Сhecking the following menu links " + type);
         WebElement element = null;
         switch (type) {
             case "allItem":
@@ -81,7 +89,9 @@ public class MenuPage extends BasePage {
         return this;
     }
 
+    @Step("Close menu")
     public MenuPage clickCloseBtn() {
+        log.info("Close menu");
         closeMenuBtn.click();
         return this;
     }
