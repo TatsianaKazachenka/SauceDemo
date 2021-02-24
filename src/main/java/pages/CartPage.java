@@ -47,20 +47,7 @@ public class CartPage extends BasePage {
     @Step("Opening Cart")
     public CartPage openPage() {
         load();
-        AllureUtils.takeScreenshot(driver);
         return this;
-    }
-
-    /**
-     * receiving product in the basket
-     *
-     * @param productName
-     * @return
-     */
-    @Step("Receiving product '{productName}' in the cart")
-    public WebElement getCartItem(String productName) {
-        log.info("Get cart item " + productName);
-        return driver.findElement(By.xpath(String.format(CART_ITEM, productName)));
     }
 
     /**
@@ -85,14 +72,14 @@ public class CartPage extends BasePage {
      * @param productName
      * @return
      */
-    @Step("Getting the price of an item in the cart")
+    @Step("Getting the price of an item by name: {productName} in the cart")
     public String getCartItemPrice(String productName) {
+        log.info("Get cart item price " + productName);
         try {
-            return getCartItem(productName)
+            return driver.findElement(By.xpath(String.format(CART_ITEM, productName)))
                     .findElement(CART_ITEM_PRICE).getText();
         }
         catch (Exception ex){
-            log.info("Get cart item price " + productName);
             AllureUtils.takeScreenshot(driver);
         }
         return ITEM_NOT_FOUND;
@@ -104,14 +91,14 @@ public class CartPage extends BasePage {
      * @param productName
      * @return
      */
-    @Step("Getting the quantity of an item in the cart")
+    @Step("Getting the quantity of an item by name: {productName}  in the cart")
     public String getCartItemQuantity(String productName) {
+        log.info("Get cart item quantity" + productName);
         try {
-            return getCartItem(productName)
+            return driver.findElement(By.xpath(String.format(CART_ITEM, productName)))
                     .findElement(CART_ITEM_QUANTITY).getText();
         }
         catch (Exception ex){
-            log.info("Get cart item quantity" + productName);
             AllureUtils.takeScreenshot(driver);
         }
         return ITEM_NOT_FOUND;

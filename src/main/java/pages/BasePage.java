@@ -16,7 +16,7 @@ abstract class BasePage<T extends LoadableComponent<T>> extends LoadableComponen
         this.driver = driver;
         int timeout = 20;
         wait = new WebDriverWait(driver, timeout);
-        log.debug(" Implicit timeout = " + timeout);
+        log.debug("Implicit timeout = " + timeout);
         PageFactory.initElements(driver, this);
     }
 
