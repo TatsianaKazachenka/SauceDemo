@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -43,6 +44,7 @@ public class LoginPage extends BasePage<LoginPage> {
      * @param username
      * @param password
      */
+    @Step("Login")
     public void login(String username, String password) {
         usernameInput.sendKeys(username);
         passwordInput.sendKeys(password);
@@ -63,6 +65,7 @@ public class LoginPage extends BasePage<LoginPage> {
                 .replace("Accepted usernames are:\n", "").split("\n"));
     }
 
+    @Step("Getting an error message")
     public String getErrorMessage() {
         return errorMessage.getText();
     }

@@ -1,10 +1,12 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import utils.AllureUtils;
 
 import java.util.List;
 
@@ -38,8 +40,10 @@ public class CartPage extends BasePage {
     /**
      * Open card page
      */
+    @Step("Opening Cart")
     public CartPage openPage() {
         load();
+        AllureUtils.takeScreenshot(driver);
         return this;
     }
 
@@ -49,6 +53,7 @@ public class CartPage extends BasePage {
      * @param productName
      * @return
      */
+    @Step("Receiving product '{productName}' in the cart")
     public WebElement getCartItem(String productName) {
         return driver.findElement(By.xpath(String.format(CART_ITEM, productName)));
     }
@@ -59,6 +64,7 @@ public class CartPage extends BasePage {
      * @param productName
      * @return
      */
+    @Step("Checking the availability of goods by name in the cart")
     public Boolean isCheckedProduct(String productName) {
         List<WebElement> elements = cartItems;
         boolean isPoduct = false;
@@ -74,7 +80,9 @@ public class CartPage extends BasePage {
      * @param productName
      * @return
      */
+    @Step("Getting the price of an item in the cart")
     public String getCartItemPrice(String productName) {
+        AllureUtils.takeScreenshot(driver);
         return getCartItem(productName)
                 .findElement(CART_ITEM_PRICE).getText();
     }
@@ -85,7 +93,9 @@ public class CartPage extends BasePage {
      * @param productName
      * @return
      */
+    @Step("Getting the quantity of an item in the cart")
     public String getCartItemQuantity(String productName) {
+        AllureUtils.takeScreenshot(driver);
         return getCartItem(productName)
                 .findElement(CART_ITEM_QUANTITY).getText();
     }
@@ -95,6 +105,7 @@ public class CartPage extends BasePage {
      *
      * @return
      */
+    @Step("Removing a product from the cart")
     public String getCartItemName() {
         return cartItemName.getText();
     }
@@ -104,6 +115,7 @@ public class CartPage extends BasePage {
         return this;
     }
 
+    @Step("Check for full cart")
     public boolean isEmptyCart() {
         try {
             return cartEmptyItems.isDisplayed();

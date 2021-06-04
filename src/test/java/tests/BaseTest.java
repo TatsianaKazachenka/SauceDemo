@@ -11,6 +11,10 @@ import pages.LoginPage;
 import pages.MenuPage;
 import pages.ProductsPage;
 import constants.ITestConstants;
+import steps.CartSteps;
+import steps.LoginSteps;
+import steps.MenuSteps;
+import steps.ProductsSteps;
 
 import java.util.concurrent.TimeUnit;
 
@@ -22,15 +26,22 @@ public class BaseTest implements ITestConstants {
     CartPage cartPage;
     MenuPage menuPage;
 
+    ProductsSteps productsSteps;
+    MenuSteps menuSteps;
+    LoginSteps loginSteps;
+    CartSteps cartSteps;
+
     @BeforeMethod
     public void initTest() {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
         options.addArguments("-incognito");
-        driver = new ChromeDriver();
+        options.addArguments("headless");
+        driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         initPages();
+        initSteps();
     }
 
     @AfterMethod(alwaysRun = true)
@@ -43,5 +54,12 @@ public class BaseTest implements ITestConstants {
         productsPage = new ProductsPage(driver);
         cartPage = new CartPage(driver);
         menuPage = new MenuPage(driver);
+    }
+
+    private void initSteps(){
+        productsSteps = new ProductsSteps(driver);
+        menuSteps = new MenuSteps(driver);
+        loginSteps = new LoginSteps(driver);
+        cartSteps = new CartSteps(driver);
     }
 }
